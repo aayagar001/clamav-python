@@ -129,11 +129,17 @@ static PyMethodDef clamavMethods2[] = {
 };
 #endif
 
-PyMODINIT_FUNC
-initclamav(void)
+static struct PyModuleDef clamav=
 {
-    (void) Py_InitModule("clamav", clamavMethods);
-    Py_AtExit(exit_cleanup);
+    PyModuleDef_HEAD_INIT,
+    "clamav", /* name of module */
+    "",       /* module documentation*/
+    -1,       /* size of per-interpreter state of the module, or -1 if the module keeps state in global variables. */
+    clamavMethods
+};
+PyMODINIT_FUNC PyInit_clamav(void)
+{
+    return PyModule_Create(&clamav);
 }
 
 static char *scan_buff(const char *buffer, int len)
